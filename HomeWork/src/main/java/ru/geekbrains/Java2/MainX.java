@@ -1,31 +1,31 @@
 package ru.geekbrains.Java2;
 
 public class MainX {
-    public static void main(String[] args) {
-//        участники
-        Human Jack = new Human(4000, 80, "Джек");
-        Human Kate = new Human(5000, 90, "Кейт");
-        Cat Steve = new Cat(15000, 50, "Стив");
-        Cat Gordon = new Cat(10000, 65, "Гордон");
-        Robot R2D2 = new Robot(1000, 5, "R2D2");
-        Robot C3PO = new Robot(1500, 10, "C3PO");
-        IParticipant[] participants = {Jack, Kate, Steve, Gordon, R2D2, C3PO};
-//        препятствия
-        Treadmill smallMill = new Treadmill(500);
-        Treadmill mediumMill = new Treadmill(1500);
-        Treadmill largeMill = new Treadmill(5000);
-        Treadmill extremelyMill = new Treadmill(10000);
-        Treadmill impossibleMill = new Treadmill(20000);
-        Wall smallWall = new Wall(3);
-        Wall mediumWall = new Wall(50);
-        Wall largeWall = new Wall(80);
-        Wall impossibleWall = new Wall(100);
-        IObstacle[] obstacles = {smallMill, smallWall, mediumMill, mediumWall, largeMill, largeWall, extremelyMill, impossibleMill, impossibleWall};
-        for(IParticipant partisipant : participants) {
-            for(IObstacle obstacle : obstacles) {
-                boolean temp = partisipant.couldOvercome(obstacle);
-                if (!temp) break;
-            }
+    public static void main(String[] args) throws Not4By4Exception, NumberFormatException, NullPointerException {
+        String s = "10 3 1 2\n2 3 2 2\n5 6 7 1\n300 3 1 0";
+        String[][] spitedStringArray=null;
+        StringToArray worker=new StringToArray(s);
+        try {
+            spitedStringArray=worker.splitArray();   // разбиваем на массив типа String[][]
+            System.out.println("Массив String[][]:");
+            worker.printStringArray(spitedStringArray);         // печатаем получившийся массив
         }
+        catch (Not4By4Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            int[][] spitedIntArray = worker.transferArray(spitedStringArray);   // преобразуем в массив типа int[][]
+            System.out.println("Массив int[][]:");
+            worker.printIntArray(spitedIntArray);   // распечатываем полученный массив
+            System.out.println(worker.arithmeticActions(spitedIntArray));   // делаем необходимые арифметические операции
+        }
+        catch (NumberFormatException e) {
+            System.out.println(e);
+        }
+        catch (NullPointerException e) {
+            System.out.println("Ошибка...");
+        }
+
     }
 }
